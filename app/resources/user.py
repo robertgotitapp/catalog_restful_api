@@ -1,9 +1,7 @@
 from flask_restful import Resource, reqparse
 from ..models.user import UserModel
 from ..schemas.user import UserSchema
-from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
-
+from werkzeug.security import generate_password_hash
 
 class User(Resource):
     schema = UserSchema(only=(
@@ -41,22 +39,11 @@ class User(Resource):
         messages = User.schema.validate(input_data)
         if messages:
             return messages, 400
-        user = UserModel(**input_data)
-
-        # Approach: validate through marshmallow and load back the UserModel object
-
-        # user = User.schema.load(
-        #                 {"username":data['username'],
-        #                  "email":data['email'],
-        #                  "password":data['password'],
-        #                  "name":data['name'],
-        #                  "created":now,
-        #                  "updated":now
-        #                 }
-        # )
-
-        # Hash password to store in the db
-        #hashed_password = generate_password_hash(data['password'], method='sha256')
+        hashed_password = generate_password_hash(data['password'], method='sha256')
+        user = UserModel(input_data['username'],
+                         hashed_password,
+                         input_data['name'],
+                         input_data['email'])
 
         try:
             user.save_to_db()

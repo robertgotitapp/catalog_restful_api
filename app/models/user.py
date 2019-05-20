@@ -1,4 +1,4 @@
-from db import db
+from app.db import db
 from .base import BaseModel
 
 
@@ -15,10 +15,6 @@ class UserModel(BaseModel):
         self.password = password
         self.name = name
         self.email = email
-
-    def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
 
     @classmethod
     def find_by_username(cls, username):

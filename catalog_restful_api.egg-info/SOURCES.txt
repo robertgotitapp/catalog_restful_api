@@ -1,0 +1,10 @@
+setup.cfg
+setup.py
+catalog_app/__init__.py
+catalog_app/app.py
+catalog_app/security.py
+catalog_restful_api.egg-info/PKG-INFO
+catalog_restful_api.egg-info/SOURCES.txt
+catalog_restful_api.egg-info/dependency_links.txt
+catalog_restful_api.egg-info/requires.txt
+catalog_restful_api.egg-info/top_level.txt
