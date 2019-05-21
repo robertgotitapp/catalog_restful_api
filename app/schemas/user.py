@@ -1,5 +1,4 @@
-from marshmallow import Schema, fields, post_load
-from ..models.user import UserModel
+from marshmallow import Schema, fields
 from ..errors.user import UserError
 
 
@@ -19,11 +18,6 @@ class UserSchema(Schema):
                   'created',
                   'updated')
         ordered = True
-
-    @post_load
-    def make_user(self, data):
-        return UserModel(**data)
-
 
 
 

@@ -1,12 +1,12 @@
-from app.db import db
+from sqlalchemy import Column, String
 from .base import BaseModel
 
 
 class CategoryModel(BaseModel):
-    __tablename = 'categories'
+    __tablename__ = 'categories'
 
-    name = db.Column(db.String(40), unique=True)
-    description = db.Column(db.String(200))
+    name = Column(String(40), unique=True)
+    description = Column(String(200))
 
     def __init__(self, name, description):
         self.name = name

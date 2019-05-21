@@ -1,14 +1,15 @@
-from app.db import db
+from app.db import Base
 from .base import BaseModel
+from sqlalchemy import Column, String
 
 
 class UserModel(BaseModel):
     __tablename__ = 'users'
 
-    username = db.Column(db.String(30))
-    password = db.Column(db.String(256))
-    name = db.Column(db.String(40))
-    email = db.Column(db.String(40))
+    username = Column(String(30))
+    password = Column(String(256))
+    name = Column(String(40))
+    email = Column(String(40))
 
     def __init__(self, username, password, name, email):
         self.username = username

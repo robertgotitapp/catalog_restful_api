@@ -3,6 +3,7 @@ from ..models.user import UserModel
 from ..schemas.user import UserSchema
 from werkzeug.security import generate_password_hash
 
+
 class User(Resource):
     schema = UserSchema(only=(
         'id', 'username', 'email', 'name', 'created', 'updated'
@@ -28,7 +29,6 @@ class User(Resource):
                         type=str,
                         required=True,
                         help="This field cannot be blank.")
-
     def post(self):
         data = User.parser.parse_args()
         input_data = {"username": data['username'],
@@ -48,6 +48,6 @@ class User(Resource):
         try:
             user.save_to_db()
         except:
-            return {'message': 'error'}
+            return {'message': 'Error occurred when saving data to database.'}
 
         return User.schema.dump(user), 201

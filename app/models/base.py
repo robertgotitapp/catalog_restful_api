@@ -1,11 +1,13 @@
 import datetime
-from app.db import db
+from sqlalchemy import Column, Integer, DateTime
+from app.db import Base, db_session
 
 
-class BaseModel(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    created = db.Column(db.DateTime, default=datetime.datetime.now().isoformat())
-    updated = db.Column(db.DateTime,
+class BaseModel(Base):
+    __abstract__ = True
+    id = Column(Integer, primary_key=True)
+    created = Column(DateTime, default=datetime.datetime.now().isoformat())
+    updated = Column(DateTime,
                         onupdate=datetime.datetime.now().isoformat(),
                         default=datetime.datetime.now().isoformat())
 
@@ -14,5 +16,5 @@ class BaseModel(db.Model):
         return cls.query.filter_by(id=_id).first()
 
     def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
+        db_session.add(self)
+        db_session.commit()
