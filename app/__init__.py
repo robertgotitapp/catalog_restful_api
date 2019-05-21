@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Api
 from flask_jwt import JWT
 from app.resources.user import User
+from app.resources.category import Category
 from app.security import authenticate, identity
 from app.config import config
 
@@ -20,6 +21,7 @@ def create_app():
     #     db.create_all()
 
     api.add_resource(User, '/users')
+    api.add_resource(Category, '/categories')
     init_db()
     return app
 

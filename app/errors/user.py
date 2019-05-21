@@ -1,5 +1,6 @@
 from marshmallow import ValidationError
 from ..models.user import UserModel
+import re
 
 
 class UserError:
@@ -21,6 +22,11 @@ class UserError:
         if UserModel.find_by_email(email):
             raise ValidationError('The email has been registered with another account.')
 
+    # This does not get to run
     @staticmethod
     def validate_password(password):
-        pass
+        if len(password) < 8:
+            raise ValidationError('Password must be longer than 8 characters.')
+        elif not re.match("^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$", password):
+            raise ValidationError('Password has to have the length of more than 8 characters, at least'
+                                  'one letter and one number.')

@@ -5,10 +5,18 @@ from werkzeug.security import generate_password_hash
 
 
 class User(Resource):
-    schema = UserSchema(only=(
+    input_schema = UserSchema(only=(
+        'username', 'email', 'name', 'password'
+    ))
+
+    output_schema = UserSchema(only=(
         'id', 'username', 'email', 'name', 'created', 'updated'
     ), partial=('id', 'created', 'updated')
     )
+
+
+
+
     parser = reqparse.RequestParser()
     parser.add_argument('username',
                         type=str,
@@ -29,6 +37,7 @@ class User(Resource):
                         type=str,
                         required=True,
                         help="This field cannot be blank.")
+
     def post(self):
         data = User.parser.parse_args()
         input_data = {"username": data['username'],
@@ -36,7 +45,7 @@ class User(Resource):
                       "password": data['password'],
                       "name": data['name']
                       }
-        messages = User.schema.validate(input_data)
+        messages = User.input_schema.validate(input_data)
         if messages:
             return messages, 400
         hashed_password = generate_password_hash(data['password'], method='sha256')
@@ -50,4 +59,4 @@ class User(Resource):
         except:
             return {'message': 'Error occurred when saving data to database.'}
 
-        return User.schema.dump(user), 201
+        return User.output_schema.dump(user), 201
