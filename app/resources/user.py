@@ -1,21 +1,13 @@
 from flask_restful import Resource, reqparse
 from ..models.user import UserModel
 from ..schemas.user import UserSchema
-from werkzeug.security import generate_password_hash
 
 
 class User(Resource):
-    input_schema = UserSchema(only=(
-        'username', 'email', 'name', 'password'
-    ))
-
-    output_schema = UserSchema(only=(
-        'id', 'username', 'email', 'name', 'created', 'updated'
-    ), partial=('id', 'created', 'updated')
-    )
-
-
-
+    input_schema = UserSchema(
+        only=('username', 'email', 'name', 'password'))
+    output_schema = UserSchema(
+        only=('id', 'username', 'email', 'name', 'created', 'updated'))
 
     parser = reqparse.RequestParser()
     parser.add_argument('username',
@@ -48,9 +40,8 @@ class User(Resource):
         messages = User.input_schema.validate(input_data)
         if messages:
             return messages, 400
-        hashed_password = generate_password_hash(data['password'], method='sha256')
         user = UserModel(input_data['username'],
-                         hashed_password,
+                         input_data['password'],
                          input_data['name'],
                          input_data['email'])
 

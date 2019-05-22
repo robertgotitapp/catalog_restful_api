@@ -39,5 +39,8 @@ def init_db():
 
 
 def clear_db():
-    # Base.metadata.drop_all(bind=engine)
     executeScriptsFromFile('app/sql/remove_tables.sql')
+
+
+def create_mock_data():
+    executeScriptsFromFile('app/sql/mock_data.sql')

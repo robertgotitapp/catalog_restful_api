@@ -1,33 +1,29 @@
-def test_register_duplicate_user(client):
-    first_response = client.post(
-        '/users', data={'username': 'timothy',
-                        'password': 'IloveIceCream1',
-                        'name': 'Timothy Mackenzie',
-                        'email': 'timothy@gmail.com'})
-    assert first_response.status_code == 201
-
-    second_response = client.post(
-        '/users', data={'username': 'timothy',
-                        'password': 'IloveIceCream1',
-                        'name': 'Timothy Bailey',
-                        'email': 'tbailey@gmail.com'})
-    assert second_response.status_code == 400
+def test_register_validate_user(client):
+    response = client.post(
+        '/users', data={'username': 'elizabeth',
+                        'password': 'elizalikeicecream1',
+                        'name': 'Elizabeth Mckenzie',
+                        'email': 'elizamckinzie@gmail.com'})
+    assert response.status_code == 201
 
 
 def test_register_duplicate_email(client):
-    first_response = client.post(
-        '/users', data={'username': 'timothy',
-                        'password': 'IloveIceCream2',
-                        'name': 'Timothy Mackenzie',
-                        'email': 'timothy@gmail.com'})
-    assert first_response.status_code == 201
+    response = client.post(
+        '/users', data={'username': 'robertdaniel',
+                        'password': 'robertdan20',
+                        'name': 'Robert Daniel',
+                        'email': 'robertdavis@gmail.com'})
+    assert response.status_code == 400
 
-    second_response = client.post(
-        '/users', data={'username': 'tbailey',
-                        'password': 'IloveIceCream2',
-                        'name': 'Timothy Bailey',
-                        'email': 'timothy@gmail.com'})
-    assert second_response.status_code == 400
+
+def test_register_duplicate_username(client):
+    response = client.post(
+        '/users', data={'username': 'timothy',
+                        'password': 'timothycarlos99',
+                        'name': 'Timothy Carlos',
+                        'email': 'timcarlos@gmail.com'})
+
+    assert response.status_code == 400
 
 
 def test_register_long_username(client):
