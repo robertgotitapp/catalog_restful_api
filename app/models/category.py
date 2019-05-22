@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String
-from sqlalchemy.sql import text
 from sqlalchemy.orm import relationship
 from .base import BaseModel
 
@@ -27,4 +26,3 @@ class CategoryModel(BaseModel):
     @classmethod
     def count_rows(cls):
         return cls.query.count()
-

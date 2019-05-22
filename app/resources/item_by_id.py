@@ -82,4 +82,3 @@ class ItemById(Resource):
             item.delete_from_db()
         except:
             {'message': 'An error occurred when deleting item.'}, 500
-

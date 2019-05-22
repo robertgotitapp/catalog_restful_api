@@ -15,4 +15,3 @@ class CategoryList(Resource):
         category_list = [CategoryList.schema.dump(category) for category in results]
         obj['categories'] = category_list
         return obj, 200
-

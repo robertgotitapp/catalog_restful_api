@@ -15,6 +15,3 @@ class CategorySchema(Schema):
                   'created',
                   'updated')
         ordered = True
-
-
-

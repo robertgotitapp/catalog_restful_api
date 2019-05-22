@@ -2,6 +2,7 @@ import pytest
 from app import create_app
 from cfg import test
 
+
 @pytest.fixture
 def app():
     from app.db import init_db, clear_db, create_mock_data
@@ -13,7 +14,6 @@ def app():
         init_db()
         create_mock_data()
 
-
     yield app
     clear_db()
 
@@ -21,11 +21,3 @@ def app():
 @pytest.fixture
 def client(app):
     return app.test_client()
-
-
-
-
-
-
-
-

@@ -9,7 +9,7 @@ def test_authenticate_with_correct_credentials(client):
     response = client.post('/auth',
                            headers={'Content-Type': 'application/json'},
                            data=json.dumps(credential)
-    )
+                           )
     assert response.status_code == 200
 
 
@@ -21,5 +21,5 @@ def test_authenticate_with_incorrect_credentials(client):
     response = client.post('/auth',
                            headers={'Content-Type': 'application/json'},
                            data=json.dumps(credential)
-    )
+                           )
     assert response.status_code == 401

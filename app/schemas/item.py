@@ -19,6 +19,3 @@ class ItemSchema(Schema):
                   'created',
                   'updated')
         ordered = True
-
-
-

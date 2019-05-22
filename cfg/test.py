@@ -8,6 +8,3 @@ class _TestConfig(_Config):
 
 
 config = _TestConfig
-
-
-

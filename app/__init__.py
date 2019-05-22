@@ -30,10 +30,3 @@ def create_app():
     api.add_resource(ItemById, '/categories/<string:category_name>/items/<int:item_id>')
     init_db()
     return app
-
-
-
-
-
-
-

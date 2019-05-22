@@ -17,4 +17,3 @@ class ItemList(Resource):
         item_list = [schema.dump(item) for item in results]
         obj['items'] = item_list
         return obj, 200
-

@@ -10,7 +10,6 @@ class CategoryError:
         elif CategoryModel.find_by_name(name):
             raise ValidationError('The category already exists.')
 
-
     @staticmethod
     def validate_description(description):
         if len(description) > 200:

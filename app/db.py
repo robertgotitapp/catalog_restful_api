@@ -1,15 +1,17 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from flask import current_app, g
 
+# how to configure multiple database
 engine = create_engine('mysql+mysqlconnector://robert:robert@localhost/test_catalog_restful_api')
+# engine = engine_from_config(config)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
 
 Base = declarative_base()
 Base.query = db_session.query_property()
+
 
 def executeScriptsFromFile(filename):
     # Open and read the file as a single buffer

@@ -7,9 +7,9 @@ def test_register_validate_category(client):
         "password": "robertdavis89"
     }
     auth_response = client.post('/auth',
-                           headers={'Content-Type': 'application/json'},
-                           data=json.dumps(credential)
-    )
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
     access_token = auth_response.get_json()['access_token']
 
     new_category = {'description': 'Laptop, Computer, Music Player, Television.'}
@@ -29,12 +29,12 @@ def test_register_duplicate_category(client):
         "password": "robertdavis89"
     }
     auth_response = client.post('/auth',
-                           headers={'Content-Type': 'application/json'},
-                           data=json.dumps(credential)
-    )
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
     access_token = auth_response.get_json()['access_token']
 
-    new_category = {'description':'All items must be delicious.'}
+    new_category = {'description': 'All items must be delicious.'}
     response = client.post('/categories/Food',
                            headers=
                            {
@@ -51,9 +51,9 @@ def test_register_long_description(client):
         "password": "robertdavis89"
     }
     auth_response = client.post('/auth',
-                           headers={'Content-Type': 'application/json'},
-                           data=json.dumps(credential)
-    )
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
     access_token = auth_response.get_json()['access_token']
 
     new_category = {'description': 'Commonly, electronic devices contain circuitry consisting primarily or'

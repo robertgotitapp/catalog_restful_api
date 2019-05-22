@@ -19,6 +19,3 @@ class UserSchema(Schema):
                   'created',
                   'updated')
         ordered = True
-
-
-

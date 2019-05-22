@@ -37,26 +37,26 @@ def test_register_long_username(client):
 
 def test_register_invalidate_password(client):
     response = client.post(
-       '/users', data={'username': 'totullie',
-                       'password': 'aaaa222',
-                       'name': 'Long Island',
-                       'email': 'ilikelongname@gmail.com'})
+        '/users', data={'username': 'totullie',
+                        'password': 'aaaa222',
+                        'name': 'Long Island',
+                        'email': 'ilikelongname@gmail.com'})
     assert response.status_code == 400
 
 
 def test_register_invalidate_password(client):
     response = client.post(
-       '/users', data={'username': 'totukkia',
-                       'password': 'aaaaaaaaaaaa',
-                       'name': 'Long Island',
-                       'email': 'ilikelongname@gmail.com'})
+        '/users', data={'username': 'totukkia',
+                        'password': 'aaaaaaaaaaaa',
+                        'name': 'Long Island',
+                        'email': 'ilikelongname@gmail.com'})
     assert response.status_code == 400
 
 
 def test_register_validate_password(client):
     response = client.post(
-       '/users', data={'username': 'Tojulie',
-                       'password': 'Password1',
-                       'name': 'Long Island',
-                       'email': 'ilikelongname@gmail.com'})
+        '/users', data={'username': 'Tojulie',
+                        'password': 'Password1',
+                        'name': 'Long Island',
+                        'email': 'ilikelongname@gmail.com'})
     assert response.status_code == 201

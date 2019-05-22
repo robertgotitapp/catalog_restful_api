@@ -33,7 +33,7 @@ class ItemModel(BaseModel):
 
     @classmethod
     def find_based_on_offset_and_limit(cls, offset, limit, category_id):
-        return cls.query.filter(category_id=category_id).offset(offset).limit(limit).all()
+        return cls.query.filter_by(category_id=category_id).offset(offset).limit(limit).all()
 
     @classmethod
     def find_by_name(cls, category_id, _name):
@@ -43,4 +43,6 @@ class ItemModel(BaseModel):
     def find_by_id_with_filter_by_category(cls, category_id, _id):
         return cls.query.filter_by(category_id=category_id).filter_by(id=_id).first()
 
-
+    @classmethod
+    def count_rows(cls):
+        return cls.query.count()

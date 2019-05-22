@@ -37,5 +37,3 @@ class Category(Resource):
             schema = CategorySchema()
             return schema.dump(category), 200
         return {'message': 'The category is not existed.'}, 404
-
-
