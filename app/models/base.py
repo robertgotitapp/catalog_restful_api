@@ -13,7 +13,7 @@ class BaseModel(Base):
 
     @classmethod
     def find_by_id(cls, _id):
-        return cls.query.filter_by(id=_id).first()
+        return cls.query.filter_by(id=_id).one_or_none()
 
     def save_to_db(self):
         db_session.add(self)

@@ -29,7 +29,7 @@ class ItemModel(BaseModel):
 
     @classmethod
     def get_items_by_category(cls, category_id):
-        ItemModel.query.all().filter(category_id=category_id)
+        ItemModel.query.filter(category_id=category_id).all()
 
     @classmethod
     def find_based_on_offset_and_limit(cls, offset, limit, category_id):
@@ -41,7 +41,7 @@ class ItemModel(BaseModel):
 
     @classmethod
     def find_by_id_with_filter_by_category(cls, category_id, _id):
-        return cls.query.filter_by(category_id=category_id).filter_by(id=_id).first()
+        return cls.query.filter_by(category_id=category_id).filter_by(id=_id).one_or_none()
 
     @classmethod
     def count_rows(cls):

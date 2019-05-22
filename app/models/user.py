@@ -19,8 +19,8 @@ class UserModel(BaseModel):
 
     @classmethod
     def find_by_username(cls, username):
-        return cls.query.filter_by(username=username).first()
+        return cls.query.filter_by(username=username).one_or_none()
 
     @classmethod
     def find_by_email(cls, email):
-        return cls.query.filter_by(email=email).first()
+        return cls.query.filter_by(email=email).one_or_none()

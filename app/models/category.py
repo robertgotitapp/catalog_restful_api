@@ -17,7 +17,7 @@ class CategoryModel(BaseModel):
 
     @classmethod
     def find_by_name(cls, name):
-        return cls.query.filter_by(name=name).first()
+        return cls.query.filter_by(name=name).one_or_none()
 
     @classmethod
     def find_based_on_offset_and_limit(cls, offset, limit):
