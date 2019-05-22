@@ -7,6 +7,8 @@ class UserSchema(Schema):
     email = fields.Email(validate=UserError.validate_email)
     name = fields.Str(validate=UserError.validate_name)
     password = fields.Str(validate=UserError.validate_password)
+    created = fields.DateTime()
+    updated = fields.DateTime()
 
     class Meta:
         fields = ('id',

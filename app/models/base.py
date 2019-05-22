@@ -8,8 +8,8 @@ class BaseModel(Base):
     id = Column(Integer, primary_key=True)
     created = Column(DateTime, default=datetime.datetime.now().isoformat())
     updated = Column(DateTime,
-                        onupdate=datetime.datetime.now().isoformat(),
-                        default=datetime.datetime.now().isoformat())
+                     default=datetime.datetime.now().isoformat(),
+                     onupdate=datetime.datetime.now().isoformat())
 
     @classmethod
     def find_by_id(cls, _id):

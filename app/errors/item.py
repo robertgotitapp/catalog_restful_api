@@ -1,17 +1,14 @@
 from marshmallow import ValidationError
-from ..models.item import ItemModel
 
 
 class ItemError:
 
     @staticmethod
     def validate_name(name):
-        pass
+        if len(name) > 40:
+            raise ValidationError('Name length must be equal or lower than 40.')
 
     @staticmethod
     def validate_description(description):
-        pass
-
-    @staticmethod
-    def validate_price(price):
-        pass
+        if len(description) > 200:
+            raise ValidationError('Description length must be equal or lower than 200 characters.')
