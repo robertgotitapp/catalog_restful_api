@@ -25,6 +25,30 @@ def test_post_validate_item(client):
     assert response.status_code == 201
 
 
+def test_post_item_with_negative_price(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+    item_to_add = {
+        'name': 'Macbook Air',
+        'description': 'A very good laptop',
+        'price': -1199.99}
+    response = client.post('/categories/1/items',
+                           headers=
+                           {
+                               'Content-Type': 'application/json',
+                               'Authorization': 'JWT ' + access_token
+                           },
+                           data=json.dumps(item_to_add))
+    assert response.status_code == 400
+
+
 def test_post_item_with_too_long_description(client):
     credential = {
         "username": "robert",

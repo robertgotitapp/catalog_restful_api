@@ -5,7 +5,7 @@ from ..errors.item import ItemError
 class ItemSchema(Schema):
     name = fields.Str(validate=ItemError.validate_name)
     description = fields.Str(validate=ItemError.validate_description)
-    price = fields.Float()
+    price = fields.Float(validate=ItemError.validate_price)
     created = fields.DateTime()
     updated = fields.DateTime()
 
