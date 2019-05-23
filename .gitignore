@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 venv/
 .idea/
+catalog_restful_api.egg-info/
+.coverage
+.gitignore
