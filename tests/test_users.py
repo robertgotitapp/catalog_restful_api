@@ -1,4 +1,4 @@
-def test_register_validate_user(client):
+def test_post_validate_user(client):
     response = client.post(
         '/users', data={'username': 'elizabeth',
                         'password': 'elizalikeicecream1',
@@ -7,7 +7,7 @@ def test_register_validate_user(client):
     assert response.status_code == 201
 
 
-def test_register_duplicate_email(client):
+def test_post_duplicate_email(client):
     response = client.post(
         '/users', data={'username': 'robertdaniel',
                         'password': 'robertdan20',
@@ -16,7 +16,7 @@ def test_register_duplicate_email(client):
     assert response.status_code == 400
 
 
-def test_register_duplicate_username(client):
+def test_post_duplicate_username(client):
     response = client.post(
         '/users', data={'username': 'timothy',
                         'password': 'timothycarlos99',
@@ -26,7 +26,7 @@ def test_register_duplicate_username(client):
     assert response.status_code == 400
 
 
-def test_register_long_username(client):
+def test_post_long_username(client):
     response = client.post(
         '/users', data={'username': 'ilikealooooooooooooooooooooooooooooooooooooooongname',
                         'password': 'LongPassword',
@@ -35,7 +35,7 @@ def test_register_long_username(client):
     assert response.status_code == 400
 
 
-def test_register_invalidate_password(client):
+def test_post_invalidate_password(client):
     response = client.post(
         '/users', data={'username': 'totullie',
                         'password': 'aaaa222',
@@ -44,7 +44,7 @@ def test_register_invalidate_password(client):
     assert response.status_code == 400
 
 
-def test_register_invalidate_password(client):
+def test_post_invalidate_password(client):
     response = client.post(
         '/users', data={'username': 'totukkia',
                         'password': 'aaaaaaaaaaaa',
@@ -53,7 +53,7 @@ def test_register_invalidate_password(client):
     assert response.status_code == 400
 
 
-def test_register_validate_password(client):
+def test_post_validate_password(client):
     response = client.post(
         '/users', data={'username': 'Tojulie',
                         'password': 'Password1',

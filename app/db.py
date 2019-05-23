@@ -1,9 +1,10 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+from app.config import config
 
 # how to configure multiple database
-engine = create_engine('mysql+mysqlconnector://robert:robert@localhost/test_catalog_restful_api')
+engine = create_engine(config.SQL_ALCHEMY_DATABASE_URI)
 # engine = engine_from_config(config)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,

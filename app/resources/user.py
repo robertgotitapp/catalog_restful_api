@@ -30,7 +30,8 @@ class User(Resource):
                         required=True,
                         help="This field cannot be blank.")
 
-    def post(self):
+    @staticmethod
+    def post():
         data = User.parser.parse_args()
         input_data = {"username": data['username'],
                       "email": data['email'],
@@ -50,4 +51,4 @@ class User(Resource):
         except:
             return {'message': 'Error occurred when saving data to database.'}
 
-        return User.output_schema.dump(user), 201
+        return User.output_schema.dump(user).data, 201

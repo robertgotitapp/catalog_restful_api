@@ -1,7 +1,7 @@
 import json
 
 
-def test_authenticate_with_correct_credentials(client):
+def test_post_correct_credentials(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -13,7 +13,7 @@ def test_authenticate_with_correct_credentials(client):
     assert response.status_code == 200
 
 
-def test_authenticate_with_incorrect_credentials(client):
+def test_post_incorrect_credentials(client):
     credential = {
         'username': 'timothy',
         'password': 'IloveIceCream12'

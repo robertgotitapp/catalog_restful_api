@@ -36,10 +36,6 @@ class ItemModel(BaseModel):
         return cls.query.filter_by(category_id=category_id).offset(offset).limit(limit).all()
 
     @classmethod
-    def find_by_name(cls, category_id, _name):
-        return cls.query.filter_by(category_id=category_id).filter_by(name=_name).all()
-
-    @classmethod
     def find_by_id_with_filter_by_category(cls, category_id, _id):
         return cls.query.filter_by(category_id=category_id).filter_by(id=_id).one_or_none()
 
