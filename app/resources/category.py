@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from ..models.category import CategoryModel
 from ..schemas.category import CategorySchema
+from ..handles.category import CategoryHandle
 
 
 class Category(Resource):
@@ -16,4 +17,4 @@ class Category(Resource):
         if category:
             schema = CategorySchema()
             return schema.dump(category).data, 200
-        return {'message': 'The category is not existed.'}, 404
+        return CategoryHandle.handle_missing_category()

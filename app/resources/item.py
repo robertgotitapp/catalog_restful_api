@@ -3,6 +3,8 @@ from ..models.item import ItemModel
 from ..models.category import CategoryModel
 from ..schemas.item import ItemSchema
 from flask_jwt import jwt_required, current_identity
+from ..handles.base import BaseHandle
+from ..handles.item import ItemHandle
 
 
 class Item(Resource):
@@ -25,10 +27,10 @@ class Item(Resource):
     def get(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
         if not item:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         return Item.schema.dump(item).data, 200
 
     @staticmethod
@@ -36,7 +38,7 @@ class Item(Resource):
     def put(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
         data = Item.parser.parse_args()
         input_data = {
@@ -56,18 +58,18 @@ class Item(Resource):
             try:
                 item.save_to_db()
             except:
-                return {'message': 'Error occurred when saving item to database.'}, 500
+                return BaseHandle.handle_server_problem()
             return Item.schema.dump(item).data, 201
         else:
             if current_identity.id != item.user_id:
-                return {'message': "The user is not authorized to perform this action."}, 403
+                return BaseHandle.handle_authorization_problem()
             item.name = input_data['name']
             item.description = input_data['description']
             item.price = input_data['price']
             try:
                 item.save_to_db()
             except:
-                return {'message': 'Error occurred when updating item.'}, 500
+                return BaseHandle.handle_server_problem()
             return Item.schema.dump(item).data, 200
 
     @staticmethod
@@ -75,14 +77,14 @@ class Item(Resource):
     def delete(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
         if not item:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         if current_identity.id != item_id:
-            return {'message': "The user is not authorized to perform this action."}, 403
+            return BaseHandle.handle_authorization_problem()
         try:
             item.delete_from_db()
         except:
-            {'message': 'An error occurred when deleting item.'}, 500
+            return BaseHandle.handle_server_problem()
         return {'message': 'The item has been deleted.'}

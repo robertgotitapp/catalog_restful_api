@@ -2,6 +2,7 @@ from flask_restful import Resource, request, reqparse
 from ..models.category import CategoryModel
 from ..schemas.category import CategorySchema
 from flask_jwt import jwt_required
+from ..handles.base import BaseHandle
 
 
 class CategoryList(Resource):
@@ -44,6 +45,6 @@ class CategoryList(Resource):
         try:
             category.save_to_db()
         except:
-            return {'message': 'Error occurred when saving category to database.'}, 500
+            return BaseHandle.handle_server_problem()
 
         return CategoryList.schema.dump(category).data, 201

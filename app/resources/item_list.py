@@ -3,7 +3,8 @@ from ..models.item import ItemModel
 from ..models.category import CategoryModel
 from ..schemas.item import ItemSchema
 from flask_jwt import jwt_required, current_identity
-
+from ..handles.base import BaseHandle
+from ..handles.item import ItemHandle
 
 class ItemList(Resource):
     schema = ItemSchema(partial=('id', 'created', 'updated'))
@@ -26,7 +27,7 @@ class ItemList(Resource):
     def post(category_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
 
         data = ItemList.parser.parse_args()
         input_data = {
@@ -47,14 +48,14 @@ class ItemList(Resource):
         try:
             item.save_to_db()
         except:
-            return {'message': 'Error occurred when saving item to database.'}, 500
+            return BaseHandle.handle_server_problem()
         return ItemList.schema.dump(item).data, 201
 
     @staticmethod
     def get(category_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return {'message': 'The item is not existed.'}, 404
+            return ItemHandle.handle_missing_item()
         offset = int(request.args.get('offset'))
         limit = int(request.args.get('limit'))
         results = ItemModel.find_based_on_offset_and_limit(offset, limit, category_id)

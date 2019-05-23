@@ -1,6 +1,7 @@
 from flask_restful import Resource, reqparse
 from ..models.user import UserModel
 from ..schemas.user import UserSchema
+from ..handles.base import BaseHandle
 
 
 class User(Resource):
@@ -49,6 +50,6 @@ class User(Resource):
         try:
             user.save_to_db()
         except:
-            return {'message': 'Error occurred when saving data to database.'}
+            return BaseHandle.handle_server_problem()
 
         return User.output_schema.dump(user).data, 201
