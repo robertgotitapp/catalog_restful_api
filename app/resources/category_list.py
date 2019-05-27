@@ -1,4 +1,4 @@
-from flask_restful import Resource, request, reqparse
+from flask_restful import Resource, request
 from ..models.category import CategoryModel
 from ..schemas.category import CategorySchema
 from flask_jwt import jwt_required
@@ -7,15 +7,6 @@ from ..handles.base import BaseHandle
 
 class CategoryList(Resource):
     schema = CategorySchema(partial=('id', 'created', 'updated'))
-    parser = reqparse.RequestParser()
-
-    parser.add_argument('name',
-                        type=str,
-                        required=True,
-                        help='This field cannot be blank.')
-
-    parser.add_argument('description',
-                        type=str)
 
     @staticmethod
     def get():
@@ -31,7 +22,7 @@ class CategoryList(Resource):
     @staticmethod
     @jwt_required()
     def post():
-        data = CategoryList.parser.parse_args()
+        data = request.get_json()
         input_data = {
             'name': data['name'],
             'description': data['description']

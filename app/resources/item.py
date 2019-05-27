@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, request
 from ..models.item import ItemModel
 from ..models.category import CategoryModel
 from ..schemas.item import ItemSchema
@@ -9,19 +9,6 @@ from ..handles.item import ItemHandle
 
 class Item(Resource):
     schema = ItemSchema(partial=('id', 'created', 'updated'))
-    parser = reqparse.RequestParser()
-    parser.add_argument('name',
-                        type=str,
-                        required=True,
-                        help="this field cannot be blank.")
-    parser.add_argument('description',
-                        type=str,
-                        required=True,
-                        help="this field cannot be blank.")
-    parser.add_argument('price',
-                        type=float,
-                        required=True,
-                        help="this field cannot be blank.")
 
     @staticmethod
     def get(category_id, item_id):
@@ -40,7 +27,7 @@ class Item(Resource):
         if not category:
             return ItemHandle.handle_missing_item()
         item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
-        data = Item.parser.parse_args()
+        data = request.get_json()
         input_data = {
             'name': data['name'],
             'description': data['description'],
@@ -81,7 +68,7 @@ class Item(Resource):
         item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
         if not item:
             return ItemHandle.handle_missing_item()
-        if current_identity.id != item_id:
+        if current_identity.id != item.user_id():
             return BaseHandle.handle_authorization_problem()
         try:
             item.delete_from_db()

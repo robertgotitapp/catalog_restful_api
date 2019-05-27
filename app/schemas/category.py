@@ -9,7 +9,7 @@ class CategorySchema(Schema):
     updated = fields.DateTime()
 
     class Meta:
-        fields = ('id',
+        fields = (
                   'name',
                   'description',
                   'created',

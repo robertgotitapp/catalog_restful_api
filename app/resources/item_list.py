@@ -1,4 +1,4 @@
-from flask_restful import Resource, request, reqparse
+from flask_restful import Resource, request
 from ..models.item import ItemModel
 from ..models.category import CategoryModel
 from ..schemas.item import ItemSchema
@@ -6,21 +6,9 @@ from flask_jwt import jwt_required, current_identity
 from ..handles.base import BaseHandle
 from ..handles.item import ItemHandle
 
+
 class ItemList(Resource):
     schema = ItemSchema(partial=('id', 'created', 'updated'))
-    parser = reqparse.RequestParser()
-    parser.add_argument('name',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-    parser.add_argument('description',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-    parser.add_argument('price',
-                        type=float,
-                        required=True,
-                        help="This field cannot be blank.")
 
     @staticmethod
     @jwt_required()
@@ -29,7 +17,7 @@ class ItemList(Resource):
         if not category:
             return ItemHandle.handle_missing_item()
 
-        data = ItemList.parser.parse_args()
+        data = request.get_json()
         input_data = {
             'name': data['name'],
             'description': data['description'],

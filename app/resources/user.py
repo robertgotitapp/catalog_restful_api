@@ -1,4 +1,4 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, request
 from ..models.user import UserModel
 from ..schemas.user import UserSchema
 from ..handles.base import BaseHandle
@@ -10,30 +10,9 @@ class User(Resource):
     output_schema = UserSchema(
         only=('id', 'username', 'email', 'name', 'created', 'updated'))
 
-    parser = reqparse.RequestParser()
-    parser.add_argument('username',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-
-    parser.add_argument('password',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-
-    parser.add_argument('name',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-
-    parser.add_argument('email',
-                        type=str,
-                        required=True,
-                        help="This field cannot be blank.")
-
     @staticmethod
     def post():
-        data = User.parser.parse_args()
+        data = request.get_json()
         input_data = {"username": data['username'],
                       "email": data['email'],
                       "password": data['password'],

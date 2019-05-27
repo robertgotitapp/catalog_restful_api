@@ -92,7 +92,7 @@ def test_delete_item_without_authorization(client):
     assert response.status_code == 403
 
 
-def test_put_item_with_invalidate_category(client):
+def test_update_item_with_invalidate_category(client):
     credential = {
         "username": "taylor",
         "password": "taylortran91"
@@ -113,7 +113,7 @@ def test_put_item_with_invalidate_category(client):
     assert response.status_code == 404
 
 
-def test_put_item_with_missing_fields(client):
+def test_update_item_with_missing_fields(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -134,7 +134,7 @@ def test_put_item_with_missing_fields(client):
     assert response.status_code == 400
 
 
-def test_put_item_with_too_long_description(client):
+def test_update_item_with_too_long_description(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -162,7 +162,7 @@ def test_put_item_with_too_long_description(client):
     assert response.status_code == 400
 
 
-def test_put_item_without_authorization(client):
+def test_update_item_without_authorization(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -185,7 +185,7 @@ def test_put_item_without_authorization(client):
     assert response.status_code == 403
 
 
-def test_put_to_update_existing_item(client):
+def test_update_to_update_existing_item(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -208,7 +208,7 @@ def test_put_to_update_existing_item(client):
     assert response.status_code == 200
 
 
-def test_put_to_make_new_item(client):
+def test_update_to_make_new_item(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
