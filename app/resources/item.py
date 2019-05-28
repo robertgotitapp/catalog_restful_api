@@ -15,10 +15,10 @@ class Item(Resource):
         category = CategoryModel.find_by_id(category_id)
         if not category:
             return ItemHandle.handle_missing_item()
-        item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
+        item = ItemModel.find_by_id_and_category(category_id, item_id)
         if not item:
             return ItemHandle.handle_missing_item()
-        return Item.schema.dump(item).data, 200
+        return Item.schema.dump(item), 200
 
     @staticmethod
     @jwt_required()
@@ -26,38 +26,33 @@ class Item(Resource):
         category = CategoryModel.find_by_id(category_id)
         if not category:
             return ItemHandle.handle_missing_item()
-        item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
+        item = ItemModel.find_by_id_and_category(category_id, item_id)
         data = request.get_json()
-        input_data = {
-            'name': data['name'],
-            'description': data['description'],
-            'price': data['price']
-        }
-        messages = Item.schema.validate(input_data)
+        messages = Item.schema.validate(data)
         if messages:
             return messages, 400
         if not item:
-            item = ItemModel(input_data['name'],
-                             input_data['description'],
-                             input_data['price'],
+            item = ItemModel(data['name'],
+                             data['description'],
+                             data['price'],
                              category_id,
                              current_identity.id)
             try:
                 item.save_to_db()
             except:
                 return BaseHandle.handle_server_problem()
-            return Item.schema.dump(item).data, 201
+            return Item.schema.dump(item), 201
         else:
             if current_identity.id != item.user_id:
                 return BaseHandle.handle_authorization_problem()
-            item.name = input_data['name']
-            item.description = input_data['description']
-            item.price = input_data['price']
+            item.name = data['name']
+            item.description = data['description']
+            item.price = data['price']
             try:
                 item.save_to_db()
             except:
                 return BaseHandle.handle_server_problem()
-            return Item.schema.dump(item).data, 200
+            return Item.schema.dump(item), 200
 
     @staticmethod
     @jwt_required()
@@ -65,7 +60,7 @@ class Item(Resource):
         category = CategoryModel.find_by_id(category_id)
         if not category:
             return ItemHandle.handle_missing_item()
-        item = ItemModel.find_by_id_with_filter_by_category(category_id, item_id)
+        item = ItemModel.find_by_id_and_category(category_id, item_id)
         if not item:
             return ItemHandle.handle_missing_item()
         if current_identity.id != item.user_id():

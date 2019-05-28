@@ -7,10 +7,10 @@ class BaseModel(Base):
     # Base class that provides the basic interface for every class to inherits from
     __abstract__ = True
     id = Column(Integer, primary_key=True)
-    created = Column(DateTime, default=datetime.datetime.now().isoformat())
+    created = Column(DateTime, default=datetime.datetime.utcnow)
     updated = Column(DateTime,
-                     default=datetime.datetime.now().isoformat(),
-                     onupdate=datetime.datetime.now().isoformat())
+                     default=datetime.datetime.utcnow,
+                     onupdate=datetime.datetime.utcnow)
 
     @classmethod
     def find_by_id(cls, _id):

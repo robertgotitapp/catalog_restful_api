@@ -8,14 +8,18 @@ class UserError:
     @staticmethod
     def validate_username(username):
         if len(username) > 30:
-            raise ValidationError('Username length must be equal or lower than 30.')
+            raise ValidationError('Username length must be equal or shorter than 30 characters.')
+        if len(username) < 5:
+            raise ValidationError('Name length must be at least 5 characters.')
         elif UserModel.find_by_username(username):
             raise ValidationError('The username has been taken.')
 
     @staticmethod
     def validate_name(name):
         if len(name) > 40:
-            raise ValidationError('Name length must be equal or lower than 40.')
+            raise ValidationError('Name length must be equal or shorter than 40 characters.')
+        if len(name) < 2:
+            raise ValidationError('Name length must be at least 2 characters.')
 
     @staticmethod
     def validate_email(email):

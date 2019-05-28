@@ -6,8 +6,8 @@ from werkzeug.security import generate_password_hash
 class UserModel(BaseModel):
     __tablename__ = 'users'
 
-    username = Column(String(30))
-    password = Column(String(256), unique=True)
+    username = Column(String(30), unique=True)
+    password = Column(String(256))
     name = Column(String(40))
     email = Column(String(40), unique=True)
 

@@ -3,19 +3,16 @@ from ..errors.item import ItemError
 
 
 class ItemSchema(Schema):
-    name = fields.Str(validate=ItemError.validate_name)
-    description = fields.Str(validate=ItemError.validate_description)
-    price = fields.Float(validate=ItemError.validate_price)
+    id = fields.Integer()
+    name = fields.String(
+        required=True,
+        error_messages={'Required': 'Name is required'},
+        validate=ItemError.validate_name)
+    description = fields.String(
+        validate=ItemError.validate_description)
+    price = fields.Float(
+        required=True,
+        error_messages={'Required': 'Price is required'},
+        validate=ItemError.validate_price)
     created = fields.DateTime()
     updated = fields.DateTime()
-
-    class Meta:
-        fields = ('id',
-                  'name',
-                  'description',
-                  'price',
-                  'user_id',
-                  'category_id',
-                  'created',
-                  'updated')
-        ordered = True

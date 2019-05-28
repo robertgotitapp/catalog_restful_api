@@ -15,7 +15,7 @@ class CategoryList(Resource):
         results = CategoryModel.find_based_on_offset_and_limit(offset, limit)
         obj = {}
         obj['total_categories'] = CategoryModel.count_rows()
-        category_list = [CategoryList.schema.dump(category).data for category in results]
+        category_list = [CategoryList.schema.dump(category) for category in results]
         obj['categories'] = category_list
         return obj, 200
 
@@ -23,19 +23,14 @@ class CategoryList(Resource):
     @jwt_required()
     def post():
         data = request.get_json()
-        input_data = {
-            'name': data['name'],
-            'description': data['description']
-        }
-        messages = CategoryList.schema.validate(input_data)
+        messages = CategoryList.schema.validate(data)
         if messages:
             return messages, 400
-        category = CategoryModel(input_data['name'],
-                                 input_data['description'])
+        category = CategoryModel(**data)
 
         try:
             category.save_to_db()
         except:
             return BaseHandle.handle_server_problem()
 
-        return CategoryList.schema.dump(category).data, 201
+        return CategoryList.schema.dump(category), 201

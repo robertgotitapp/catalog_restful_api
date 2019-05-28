@@ -6,7 +6,9 @@ class ItemError:
     @staticmethod
     def validate_name(name):
         if len(name) > 40:
-            raise ValidationError('Name length must be equal or lower than 40.')
+            raise ValidationError('Name length must be equal or shorter than 40 characters.')
+        if len(name) < 2:
+            raise ValidationError('Name length must be at least 2 characters.')
 
     @staticmethod
     def validate_description(description):
