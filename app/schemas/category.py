@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from ..errors.category import CategoryError
+from ..validation.category import CategoryError
 
 
 class CategorySchema(Schema):

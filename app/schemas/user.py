@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from ..errors.user import UserError
+from ..validation.user import UserError
 
 
 class UserSchema(Schema):

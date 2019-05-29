@@ -3,8 +3,8 @@ from ..models.item import ItemModel
 from ..models.category import CategoryModel
 from ..schemas.item import ItemSchema
 from flask_jwt import jwt_required, current_identity
-from ..handles.base import BaseHandle
-from ..handles.item import ItemHandle
+from ..handles.common_handles import ServerProblem, AuthorizationProblem, NotFound, BadRequest
+from marshmallow import ValidationError
 
 
 class Item(Resource):
@@ -14,10 +14,10 @@ class Item(Resource):
     def get(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return ItemHandle.handle_missing_item()
+            raise NotFound()
         item = ItemModel.find_by_id_and_category(category_id, item_id)
         if not item:
-            return ItemHandle.handle_missing_item()
+            raise NotFound()
         return Item.schema.dump(item), 200
 
     @staticmethod
@@ -25,33 +25,25 @@ class Item(Resource):
     def put(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return ItemHandle.handle_missing_item()
+            raise NotFound()
         item = ItemModel.find_by_id_and_category(category_id, item_id)
         data = request.get_json()
-        messages = Item.schema.validate(data)
-        if messages:
-            return messages, 400
+        try:
+            Item.schema.load(data)
+        except ValidationError as err:
+            raise BadRequest(err.messages)
         if not item:
-            item = ItemModel(data['name'],
-                             data['description'],
-                             data['price'],
-                             category_id,
-                             current_identity.id)
-            try:
-                item.save_to_db()
-            except:
-                return BaseHandle.handle_server_problem()
-            return Item.schema.dump(item), 201
+            raise NotFound()
         else:
             if current_identity.id != item.user_id:
-                return BaseHandle.handle_authorization_problem()
+                raise AuthorizationProblem()
             item.name = data['name']
             item.description = data['description']
             item.price = data['price']
             try:
                 item.save_to_db()
-            except:
-                return BaseHandle.handle_server_problem()
+            except Exception:
+                raise ServerProblem()
             return Item.schema.dump(item), 200
 
     @staticmethod
@@ -59,14 +51,14 @@ class Item(Resource):
     def delete(category_id, item_id):
         category = CategoryModel.find_by_id(category_id)
         if not category:
-            return ItemHandle.handle_missing_item()
+            raise NotFound()
         item = ItemModel.find_by_id_and_category(category_id, item_id)
         if not item:
-            return ItemHandle.handle_missing_item()
-        if current_identity.id != item.user_id():
-            return BaseHandle.handle_authorization_problem()
+            raise NotFound()
+        if current_identity.id != item.user_id:
+            raise AuthorizationProblem()
         try:
             item.delete_from_db()
-        except:
-            return BaseHandle.handle_server_problem()
+        except Exception:
+            raise ServerProblem()
         return {'message': 'The item has been deleted.'}

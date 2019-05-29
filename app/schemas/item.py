@@ -1,5 +1,5 @@
 from marshmallow import Schema, fields
-from ..errors.item import ItemError
+from ..validation.item import ItemError
 
 
 class ItemSchema(Schema):

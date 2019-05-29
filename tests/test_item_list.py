@@ -49,6 +49,54 @@ def test_post_item_with_negative_price(client):
     assert response.status_code == 400
 
 
+def test_post_item_with_long_name(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+    item_to_post = {
+        'name': 'Macbook Air 2017 Silver/White Color 15 inch 500GB HDD with black/white case',
+        'description': 'A very good laptop. It has 13.3-inch (diagonal) LED-backlit display with IPS.',
+        'price': 1199.99}
+    response = client.post('/categories/1/items',
+                           headers=
+                           {
+                               'Content-Type': 'application/json',
+                               'Authorization': 'JWT ' + access_token
+                           },
+                           data=json.dumps(item_to_post))
+    assert response.status_code == 400
+
+
+def test_post_item_with_short_name(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+    item_to_post = {
+        'name': 'Mac',
+        'description': 'A very good laptop. It has 13.3-inch (diagonal) LED-backlit display with IPS.',
+        'price': 1199.99}
+    response = client.post('/categories/1/items',
+                           headers=
+                           {
+                               'Content-Type': 'application/json',
+                               'Authorization': 'JWT ' + access_token
+                           },
+                           data=json.dumps(item_to_post))
+    assert response.status_code == 400
+
+
 def test_post_item_with_too_long_description(client):
     credential = {
         "username": "robert",

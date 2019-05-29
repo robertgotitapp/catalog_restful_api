@@ -45,6 +45,52 @@ def test_post_duplicate_category(client):
     assert response.status_code == 400
 
 
+def test_post_long_category_name(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+
+    new_category = {'name': 'Electronic Motorbike GTX-2 KEIA-2 Low Price Good Quality Only Available in 2 months',
+                    'description': 'Laptop, Computer, Music Player, Television.'}
+    response = client.post('/categories',
+                           headers=
+                           {
+                               'Content-Type': 'application/json',
+                               'Authorization': 'JWT ' + access_token
+                           },
+                           data=json.dumps(new_category))
+    assert response.status_code == 400
+
+
+def test_post_short_category_name(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+
+    new_category = {'name': 'Elsa',
+                    'description': 'Laptop, Computer, Music Player, Television.'}
+    response = client.post('/categories',
+                           headers=
+                           {
+                               'Content-Type': 'application/json',
+                               'Authorization': 'JWT ' + access_token
+                           },
+                           data=json.dumps(new_category))
+    assert response.status_code == 400
+
+
 def test_post_long_description(client):
     credential = {
         "username": "robert",

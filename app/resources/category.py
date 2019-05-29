@@ -1,7 +1,7 @@
 from flask_restful import Resource
 from ..models.category import CategoryModel
 from ..schemas.category import CategorySchema
-from ..handles.category import CategoryHandle
+from ..handles.common_handles import NotFound
 
 
 class Category(Resource):
@@ -12,4 +12,4 @@ class Category(Resource):
         if category:
             schema = CategorySchema()
             return schema.dump(category), 200
-        return CategoryHandle.handle_missing_category()
+        raise NotFound()

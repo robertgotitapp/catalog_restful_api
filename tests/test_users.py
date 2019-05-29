@@ -35,6 +35,15 @@ def test_post_long_username(client):
     assert response.status_code == 400
 
 
+def test_post_short_username(client):
+    response = client.post(
+        '/users', data={'username': 'ils',
+                        'password': 'LongPassword',
+                        'name': 'Long Island',
+                        'email': 'ilikelongname@gmail.com'})
+    assert response.status_code == 400
+
+
 def test_post_invalidate_password(client):
     response = client.post(
         '/users', data={'username': 'totullie',

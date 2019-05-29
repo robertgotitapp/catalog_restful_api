@@ -2,7 +2,7 @@ from flask_restful import Resource, request
 from ..models.category import CategoryModel
 from ..schemas.category import CategorySchema
 from flask_jwt import jwt_required
-from ..handles.base import BaseHandle
+from ..handles.common_handles import InvalidUsage, ServerProblem, BadRequest
 
 
 class CategoryList(Resource):
@@ -10,9 +10,12 @@ class CategoryList(Resource):
 
     @staticmethod
     def get():
-        offset = int(request.args.get('offset'))
-        limit = int(request.args.get('limit'))
-        results = CategoryModel.find_based_on_offset_and_limit(offset, limit)
+        try:
+            offset = int(request.args.get('offset'))
+            limit = int(request.args.get('limit'))
+            results = CategoryModel.find_based_on_offset_and_limit(offset, limit)
+        except Exception:
+            raise InvalidUsage('Error occurred because of offset and limit parameters.', 500)
         obj = {}
         obj['total_categories'] = CategoryModel.count_rows()
         category_list = [CategoryList.schema.dump(category) for category in results]
@@ -25,12 +28,12 @@ class CategoryList(Resource):
         data = request.get_json()
         messages = CategoryList.schema.validate(data)
         if messages:
-            return messages, 400
+            raise BadRequest(messages)
         category = CategoryModel(**data)
 
         try:
             category.save_to_db()
-        except:
-            return BaseHandle.handle_server_problem()
+        except Exception:
+            raise ServerProblem()
 
         return CategoryList.schema.dump(category), 201

@@ -185,7 +185,7 @@ def test_update_item_without_authorization(client):
     assert response.status_code == 403
 
 
-def test_update_to_update_existing_item(client):
+def test_update_validate_item(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -208,7 +208,7 @@ def test_update_to_update_existing_item(client):
     assert response.status_code == 200
 
 
-def test_update_to_make_new_item(client):
+def test_update_item_with_long_name(client):
     credential = {
         "username": "robert",
         "password": "robertdavis89"
@@ -218,14 +218,37 @@ def test_update_to_make_new_item(client):
                                 data=json.dumps(credential)
                                 )
     access_token = auth_response.get_json()['access_token']
-    item_to_put = {'name': 'MacbookAir',
+    item_to_put = {'name': 'Macbook Air 2017 Silver/White Color 15 inch 500GB HDD with black/white case',
                    'description': 'A very good laptop',
                    'price': 1199.99}
-    response = client.put('/categories/1/items/7',
+    response = client.put('/categories/1/items/2',
                           headers=
                           {
                               'Content-Type': 'application/json',
                               'Authorization': 'JWT ' + access_token
                           },
                           data=json.dumps(item_to_put))
-    assert response.status_code == 201
+    assert response.status_code == 400
+
+
+def test_update_item_with_short_name(client):
+    credential = {
+        "username": "robert",
+        "password": "robertdavis89"
+    }
+    auth_response = client.post('/auth',
+                                headers={'Content-Type': 'application/json'},
+                                data=json.dumps(credential)
+                                )
+    access_token = auth_response.get_json()['access_token']
+    item_to_put = {'name': 'Ma',
+                   'description': 'A very good laptop',
+                   'price': 1199.99}
+    response = client.put('/categories/1/items/2',
+                          headers=
+                          {
+                              'Content-Type': 'application/json',
+                              'Authorization': 'JWT ' + access_token
+                          },
+                          data=json.dumps(item_to_put))
+    assert response.status_code == 400

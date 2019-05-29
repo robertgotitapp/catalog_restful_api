@@ -1,8 +1,8 @@
 from flask_restful import Resource, request
 from ..models.user import UserModel
 from ..schemas.user import UserSchema
-from ..handles.base import BaseHandle
 from marshmallow import ValidationError
+from ..handles.common_handles import ServerProblem, BadRequest
 
 
 class User(Resource):
@@ -14,14 +14,10 @@ class User(Resource):
         try:
             User.schema.load(data)
         except ValidationError as err:
-            errors = err.messages
-            return errors
-
+            raise BadRequest(err.messages)
         user = UserModel(**data)
-
         try:
             user.save_to_db()
-        except:
-            return BaseHandle.handle_server_problem()
-
+        except Exception:
+            raise ServerProblem()
         return User.schema.dump(user), 201

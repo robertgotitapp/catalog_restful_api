@@ -25,7 +25,7 @@ def executeScriptsFromFile(filename):
 
     # Execute every command from the input file
     for command in sqlCommands:
-        # This will skip and report errors
+        # This will skip and report validation
         # For example, if the tables do not yet exist, this will skip over
         # the DROP TABLE commands
         try:
