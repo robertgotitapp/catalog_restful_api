@@ -20,6 +20,7 @@ def create_app():
     app.config.from_object(config)
     api = Api(app)
 
+    # Calling JWT will define the /auth endpoint for authentication
     JWT(app, authenticate, identity)
 
     # End points definition

@@ -3,6 +3,9 @@ from ..validation.category import CategoryError
 
 
 class CategorySchema(Schema):
+    """
+    Category Schema
+    """
     id = fields.Integer()
     name = fields.String(
         required=True,

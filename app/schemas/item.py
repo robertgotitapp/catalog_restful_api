@@ -3,6 +3,9 @@ from ..validation.item import ItemError
 
 
 class ItemSchema(Schema):
+    """
+    Item Schema
+    """
     id = fields.Integer()
     name = fields.String(
         required=True,

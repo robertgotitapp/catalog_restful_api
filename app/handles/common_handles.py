@@ -1,5 +1,11 @@
 class _BaseErrorHandler(Exception):
     def __init__(self, message, status_code=None, payload=None):
+        """
+        Error Handler Constructor
+        :param message: error message
+        :param status_code: error status code
+        :param payload: error payload
+        """
         Exception.__init__(self)
         self.message = message
         if status_code is not None:
@@ -7,6 +13,10 @@ class _BaseErrorHandler(Exception):
         self.payload = payload
 
     def to_dict(self):
+        """
+        Convert error message output to dictionary
+        :return: message output in the form of dictionary
+        """
         rv = dict(self.payload or ())
         rv['message'] = self.message
         return rv

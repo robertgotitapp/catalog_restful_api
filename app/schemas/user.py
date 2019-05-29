@@ -3,6 +3,9 @@ from ..validation.user import UserError
 
 
 class UserSchema(Schema):
+    """
+    User Schema
+    """
     id = fields.Integer()
     username = fields.String(
         required=True,

@@ -8,11 +8,19 @@ from marshmallow import ValidationError
 
 
 class ItemList(Resource):
+    """
+    Item List Resource
+    """
     schema = ItemSchema()
 
     @staticmethod
     @jwt_required()
     def post(category_id):
+        """
+        Add new item to the database
+        :param category_id: category_id of the item being added
+        :return: newly added item data if it is successfully added
+        """
         category = CategoryModel.find_by_id(category_id)
         if not category:
             raise NotFound()
@@ -35,6 +43,11 @@ class ItemList(Resource):
 
     @staticmethod
     def get(category_id):
+        """
+        Get list of items based on the category_id and two params offset and limit
+        :param category_id: category_id of these items being requested
+        :return: list of up to 'limit' items from corresponding category starting from 'offset'
+        """
         category = CategoryModel.find_by_id(category_id)
         if not category:
             raise NotFound()

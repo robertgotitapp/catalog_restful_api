@@ -6,10 +6,17 @@ from ..handles.common_handles import InvalidUsage, ServerProblem, BadRequest
 
 
 class CategoryList(Resource):
+    """
+    Category List Resource
+    """
     schema = CategorySchema(partial=('id', 'created', 'updated'))
 
     @staticmethod
     def get():
+        """
+        Return list of categories based on limit and offset parameters
+        :return: list of up to 'limit' rows started from 'limit' category
+        """
         try:
             offset = int(request.args.get('offset'))
             limit = int(request.args.get('limit'))
@@ -25,6 +32,10 @@ class CategoryList(Resource):
     @staticmethod
     @jwt_required()
     def post():
+        """
+        Add new category to the database
+        :return: data of new category being added
+        """
         data = request.get_json()
         messages = CategoryList.schema.validate(data)
         if messages:

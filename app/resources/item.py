@@ -8,10 +8,19 @@ from marshmallow import ValidationError
 
 
 class Item(Resource):
+    """
+    Item Resource
+    """
     schema = ItemSchema(partial=('id', 'created', 'updated'))
 
     @staticmethod
     def get(category_id, item_id):
+        """
+        Return item based on category_id and item_id being provided
+        :param category_id: category of the item being requested
+        :param item_id: item_id being requested
+        :return: item corresponds to the category_id and item_id being requested
+        """
         category = CategoryModel.find_by_id(category_id)
         if not category:
             raise NotFound()
@@ -23,6 +32,12 @@ class Item(Resource):
     @staticmethod
     @jwt_required()
     def put(category_id, item_id):
+        """
+        Update existing item based on category_id and item_id being provided
+        :param category_id: category of the item being updated
+        :param item_id: item_id of the item being updated
+        :return: data of the updated item
+        """
         category = CategoryModel.find_by_id(category_id)
         if not category:
             raise NotFound()
@@ -49,6 +64,12 @@ class Item(Resource):
     @staticmethod
     @jwt_required()
     def delete(category_id, item_id):
+        """
+        Delete the existing item from the database
+        :param category_id: category of the item being removed
+        :param item_id: id of the item being removed
+        :return: successful message if the item is successfully removed
+        """
         category = CategoryModel.find_by_id(category_id)
         if not category:
             raise NotFound()
