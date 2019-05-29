@@ -1,1 +1,1 @@
-catalog_app
+app

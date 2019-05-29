@@ -24,14 +24,17 @@ virtualenv==16.5.0 <br />
 
 ```virtualenv venv --python==python3.5``` Create the virtual environment inside catalog_restful_api folder <br />
 
-```source venv/bin/activate``` Activate the virtual environment <br />
+```source venv/bin/activate``` Activate the virtual environment instance <br />
+
+```pip install -e .``` Install the package required and setup for the unittest for the api <br />
 
 ## Running Instruction
-
 
 ```python run.py``` Run the project <br />
 
 ```pytest -v``` Run the unittest with detail description <br />
+
+```pytest --cov=app``` Run the unittest with coverage <br />
 
 ## Authors
 Robert

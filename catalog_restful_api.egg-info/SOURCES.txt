@@ -1,8 +1,10 @@
+README.md
 setup.cfg
 setup.py
-catalog_app/__init__.py
-catalog_app/app.py
-catalog_app/security.py
+app/__init__.py
+app/config.py
+app/db.py
+app/security.py
 catalog_restful_api.egg-info/PKG-INFO
 catalog_restful_api.egg-info/SOURCES.txt
 catalog_restful_api.egg-info/dependency_links.txt
