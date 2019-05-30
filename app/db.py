@@ -42,8 +42,10 @@ def init_db():
 
 
 def clear_db():
+    # run the sql script to clear all the data from the database
     executeScriptsFromFile('app/sql/remove_tables.sql')
 
 
 def create_mock_data():
+    # run the sql script to create mock data for testing
     executeScriptsFromFile('app/sql/mock_data.sql')

@@ -23,26 +23,41 @@ class _BaseErrorHandler(Exception):
 
 
 class InvalidUsage(_BaseErrorHandler):
+    """
+    Handle for Invalid Usage Case
+    """
     def __init__(self, message, status_code=None, payload=None):
         super().__init__(message, status_code, payload)
 
 
 class ServerProblem(_BaseErrorHandler):
+    """
+    Handle for Internal Server Problem
+    """
     def __init__(self):
         super().__init__('Problem occurred when server processing the action.', 500)
 
 
 class AuthorizationProblem(_BaseErrorHandler):
+    """
+    Handle for Authorization Problem
+    """
     def __init__(self):
         super().__init__('The user is not authorized to perform this action.', 403)
 
 
 class NotFound(_BaseErrorHandler):
+    """
+    Handle for Not Found Problem
+    """
     def __init__(self):
         super().__init__('Page Not Found.', 404)
 
 
 class BadRequest(_BaseErrorHandler):
+    """
+    Handle for Bad Request Problem
+    """
     def __init__(self, message='Bad Request'):
         super().__init__(message, 400)
 
