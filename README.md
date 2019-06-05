@@ -20,9 +20,13 @@ SQLAlchemy==1.3.3 <br />
 Werkzeug==0.15.4 <br />
 virtualenv==16.5.0 <br />
 
+## Prerequisites
+
+Install MySQL 5.7 on your runtime environment <br />
+
 ## Configuration
 
-```virtualenv venv --python==python3.5``` Create the virtual environment inside catalog_restful_api folder <br />
+```virtualenv venv --python=python3``` Create the virtual environment inside catalog_restful_api folder <br />
 
 ```source venv/bin/activate``` Activate the virtual environment instance <br />
 
