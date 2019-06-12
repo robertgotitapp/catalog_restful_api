@@ -1,0 +1,4 @@
+def func(num):
+  if num == 2:
+    str = "Hello"
+  print(str)

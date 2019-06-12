@@ -72,6 +72,10 @@ class ItemModel(BaseModel):
         return cls.query.filter_by(category_id=category_id).filter_by(id=_id).one_or_none()
 
     @classmethod
+    def find_by_user_id(cls, user_id):
+        return cls.query.filter_by(user_id=user_id).all()
+
+    @classmethod
     def count_rows(cls, category_id):
         """
         Return number of total items belongs to the selected category in the database

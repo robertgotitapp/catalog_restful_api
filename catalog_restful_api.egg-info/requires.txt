@@ -1,13 +1,12 @@
-flask
+Flask
 Flask-RESTful
 Flask-JWT
 Flask-SQLAlchemy
+flask-cors
 Marshmallow==3.0.0rc6
 uwsgi
 mysql-connector
 virtualenv
-
-[test]
 pytest
 coverage
 pytest-cov

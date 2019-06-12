@@ -1,0 +1,16 @@
+version: "3"
+services:
+  catalog-mysql:
+    image: mysql:5.7.26
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: catalog_restful_api
+    container_name: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - catalog-data:/var/lib/mysql
+
+volumes:
+  catalog-data:

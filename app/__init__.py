@@ -1,7 +1,9 @@
 from flask import Flask, jsonify
 from flask_restful import Api
 from flask_jwt import JWT
+from flask_cors import CORS
 from app.resources.user import User
+from app.resources.my_item_list import MyItemList
 from app.resources.category_list import CategoryList
 from app.resources.category import Category
 from app.resources.item import Item
@@ -16,7 +18,8 @@ def create_app():
     from app.db import init_db
 
     app = Flask(__name__)
-
+    CORS(app)
+    
     app.config.from_object(config)
     api = Api(app)
 
@@ -25,6 +28,7 @@ def create_app():
 
     # End points definition
     api.add_resource(User, '/users')
+    api.add_resource(MyItemList, '/me/post')
     api.add_resource(CategoryList, '/categories')
     api.add_resource(Category, '/categories/<int:category_id>')
     api.add_resource(ItemList, '/categories/<int:category_id>/items')
