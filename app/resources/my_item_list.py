@@ -23,8 +23,6 @@ class MyItemList(Resource):
 
         for item in items:
             result_item = MyItemList.schema.dump(item)
-            result_item['category_name'] = item.category.name
-            result_item['category_id'] = item.category.id
             result.append(result_item)
 
         return result, 200

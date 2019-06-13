@@ -17,5 +17,8 @@ class ItemSchema(Schema):
         required=True,
         error_messages={'Required': 'Price is required'},
         validate=ItemError.validate_price)
+    user_id = fields.String()
+    category_name = fields.String()
+    category_id = fields.String()
     created = fields.DateTime()
     updated = fields.DateTime()
