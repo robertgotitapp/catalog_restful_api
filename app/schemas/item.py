@@ -19,3 +19,5 @@ class ItemSchema(Schema):
         validate=ItemError.validate_price)
     created = fields.DateTime()
     updated = fields.DateTime()
+    user_id = fields.Integer()
+    category_id = fields.Integer()

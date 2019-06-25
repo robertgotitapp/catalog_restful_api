@@ -9,6 +9,7 @@ from app.resources.item_list import ItemList
 from app.security import authenticate, identity
 from app.config import config
 from app.handles.common_handles import BadRequest, NotFound, _BaseErrorHandler
+from flask_cors import CORS
 
 
 def create_app():
@@ -16,6 +17,7 @@ def create_app():
     from app.db import init_db
 
     app = Flask(__name__)
+    CORS(app)
 
     app.config.from_object(config)
     api = Api(app)
